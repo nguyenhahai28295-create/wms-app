@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+Lưu **Ctrl+S**
+
+---
+
+### Bước 4 — Cài lại tailwind đúng cách
+
+Trong terminal gõ:
+```
+npm install tailwindcss @tailwindcss/vite
+```
+
+*(chờ xong)*
+
+---
+
+### Bước 5 — Chạy lại app
+```
+npm run dev
