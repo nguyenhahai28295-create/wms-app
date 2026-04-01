@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { supabase } from './supabase.js';
+import GRCModule from './grc/GRCModule.jsx';
 
 /* ════════════════════════════════════════════════════════════
    RBAC — Phân quyền theo vai trò
@@ -586,6 +587,7 @@ const BPMApp = ({ currentUser, onLogout, onUserUpdate }) => {
     formbuilder: { admin:true,  director:false, manager:false, employee:false },
     users:       { admin:true,  director:false, manager:false, employee:false },
     permissions: { admin:true,  director:false, manager:false, employee:false },
+    grc:         { admin:true,  director:true,  manager:true,  employee:true  },
   };
   const [modulePerms, setModulePerms] = useState(DEFAULT_MODULE_PERMS);
   const [permsLoaded, setPermsLoaded] = useState(false);
@@ -1474,6 +1476,7 @@ const BPMApp = ({ currentUser, onLogout, onUserUpdate }) => {
     { id:'formbuilder', label:'Mẫu Biểu',          icon:'📝', module:'formbuilder' },
     { id:'users',       label:'Người Dùng',        icon:'👥', module:'users'       },
     { id:'permissions', label:'Phân Quyền',        icon:'🔐', module:'permissions' },
+    { id:'grc',         label:'GRC / Rủi Ro',      icon:'🛡️', module:'grc'         },
   ].filter(item => canAccessModule(item.module));
 
   return (
@@ -1521,6 +1524,14 @@ const BPMApp = ({ currentUser, onLogout, onUserUpdate }) => {
         {page==='formbuilder' && renderFormBuilder()}
         {page==='users'       && renderUserManagement()}
         {page==='permissions' && renderPermissions()}
+        {page==='grc'         && (
+          <GRCModule
+            currentUser={currentUser}
+            departments={departments}
+            users={users}
+            addToast={addToast}
+          />
+        )}
       </main>
 
       <Toast toasts={toasts} dismiss={dismissToast}/>
