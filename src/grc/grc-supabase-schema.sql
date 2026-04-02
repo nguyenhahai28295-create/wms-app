@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS risk_events (
   event_date date NOT NULL,
   discovery_date date,
   category_id uuid REFERENCES risk_categories(id) ON DELETE SET NULL,
-  department_id uuid REFERENCES departments(id) ON DELETE SET NULL,
+  department_id text REFERENCES departments(id) ON DELETE SET NULL,
   reporter_id uuid REFERENCES profiles(id) ON DELETE SET NULL,
   status text NOT NULL DEFAULT 'draft'
     CHECK (status IN ('draft','declared','under_review','closed','rejected')),
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS business_errors (
   title text NOT NULL,
   description text,
   error_date date NOT NULL,
-  department_id uuid REFERENCES departments(id) ON DELETE SET NULL,
+  department_id text REFERENCES departments(id) ON DELETE SET NULL,
   reporter_id uuid REFERENCES profiles(id) ON DELETE SET NULL,
   risk_event_id uuid REFERENCES risk_events(id) ON DELETE SET NULL,
   error_type text NOT NULL DEFAULT 'manual'
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS audit_findings (
   finding_type text NOT NULL DEFAULT 'minor'
     CHECK (finding_type IN ('major','minor','observation','best_practice')),
   risk_category_id uuid REFERENCES risk_categories(id) ON DELETE SET NULL,
-  department_id uuid REFERENCES departments(id) ON DELETE SET NULL,
+  department_id text REFERENCES departments(id) ON DELETE SET NULL,
   root_cause text,
   recommendation text,
   management_response text,
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS action_plans (
   priority text NOT NULL DEFAULT 'medium'
     CHECK (priority IN ('critical','high','medium','low')),
   owner_id uuid REFERENCES profiles(id) ON DELETE SET NULL,
-  department_id uuid REFERENCES departments(id) ON DELETE SET NULL,
+  department_id text REFERENCES departments(id) ON DELETE SET NULL,
   start_date date,
   due_date date,
   actual_completion_date date,
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS rcsa_sessions (
   code text UNIQUE NOT NULL,
   title text NOT NULL,
   period text NOT NULL,
-  department_id uuid REFERENCES departments(id) ON DELETE SET NULL,
+  department_id text REFERENCES departments(id) ON DELETE SET NULL,
   status text NOT NULL DEFAULT 'draft'
     CHECK (status IN ('draft','in_progress','submitted','reviewed','approved')),
   assessor_id uuid REFERENCES profiles(id) ON DELETE SET NULL,
